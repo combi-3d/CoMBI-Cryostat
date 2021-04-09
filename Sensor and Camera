@@ -1,0 +1,40 @@
+//***********************************************************
+// Designed for the sensor device, a part of the CoMBI system.
+// ATtiny85 syncs cryostat handle and shutter release,
+// using a photoreflector (Rohm RPR-220) and an optocoupler (Toshiba TLP785GB). 
+// Upload the code with the internal clock 1 MHz. 
+//***********************************************************
+
+const int ledPin = 1; const int shutterPin = 0; const int sensorPin = A2; int sensorVal = 0;
+//connect LED to 1
+//connect an optocoupler to 0 
+//connect the sensor signal to A2
+
+void setup() {
+pinMode(ledPin, OUTPUT); pinMode(shutterPin, OUTPUT); 
+digitalWrite(ledPin, HIGH); delay(200);
+digitalWrite(ledPin, LOW); delay(200);
+digitalWrite(ledPin, HIGH); delay(200);
+digitalWrite(ledPin, LOW);
+}
+// Twincle LED to sign turning on
+
+void loop() {
+sensorVal = analogRead(sensorPin); 
+delay(2);
+if (sensorVal > 250){      
+// If the sensor detect the light absorbing sheet 
+digitalWrite(shutterPin, HIGH); 
+// Release shutter
+delay(10);
+digitalWrite(shutterPin, LOW);
+digitalWrite(ledPin, HIGH); 
+// Indicate the sheet position and shutter release by LED
+delay(2000); 
+digitalWrite(ledPin, LOW); 
+}
+else{
+digitalWrite(ledPin, LOW); 
+digitalWrite(shutterPin, LOW);
+} 
+}
