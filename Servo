@@ -1,0 +1,31 @@
+//***********************************************************
+// Designed for the cleaning device, a part of the CoMBI system.
+// ATtiny85 controlls a Micro Servo SG92R. 
+//
+// Download and Install "SoftwareServo.h" into the Arduino Software.
+// Modify the SoftwareServo.h file to use <Arduino.h> instead of <WProgram.h>.
+// Upload the code with the internal clock 1 MHz. 
+//
+// (In case of Arduino/Genuino Uno, use "Servo.h".) 
+//***********************************************************
+
+#include <SoftwareServo.h> SoftwareServo myservo; 
+// create servo object
+
+void setup() {
+myservo.attach(0); 
+// attach the servo on pin 0 to the servo object 
+}
+
+void loop() {
+myservo.write(5); 
+// sets the servo position 5 
+delay(300); 
+// waits for the servo to get there 
+SoftwareServo::refresh(); 
+// recommended
+myservo.write(55); 
+// sets the servo position 55 
+delay(300);
+SoftwareServo::refresh();
+}
